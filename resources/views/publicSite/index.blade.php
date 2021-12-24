@@ -128,7 +128,7 @@
 </section>
 
 
-      <section class="ftco-intro ftco-no-pb img" style="background-image: url(images/bg_3.jpg); margin-top:7em" >
+      <section class="ftco-intro ftco-no-pb img" style="background-color:#243665 !important; opacity:unset !important; margin-top:7em" >
       <div class="container">
           <div class="row justify-content-center mb-5">
         <div class="col-md-10 text-center heading-section heading-section-white ftco-animate">

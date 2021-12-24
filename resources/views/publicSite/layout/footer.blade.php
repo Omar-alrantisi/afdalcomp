@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-6 col-lg-3">
               <div class="ftco-footer-widget mb-5">
-                <h2 class="ftco-heading-2">Recent Blog</h2>
+                <h2 class="ftco-heading-2">Latest Updates</h2>
                 <div class="block-21 mb-4 d-flex">
                   <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
                   <div class="text">
@@ -52,17 +52,7 @@
                   <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a></li>
                 </ul>
               </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="ftco-footer-widget mb-5">
-                  <h2 class="ftco-heading-2">Subscribe Us!</h2>
-                <form action="#" class="subscribe-form">
-                  <div class="form-group">
-                    <input type="text" class="form-control mb-2 text-center" placeholder="Enter email address">
-                    <input type="submit" value="Subscribe" class="form-control submit px-3">
-                  </div>
-                </form>
-              </div>
+            </div> 
               <div class="ftco-footer-widget mb-5">
                   <h2 class="ftco-heading-2 mb-0">Connect With Us</h2>
                   <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
@@ -77,7 +67,7 @@
             <div class="col-md-12 text-center">
   
               <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This website is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://google.com" target="_blank">Kafou Team</a>
     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
             </div>
           </div>
