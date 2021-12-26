@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\Owner;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 
@@ -13,9 +14,11 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function backendindex()
     {
-        //
+        $images=Image::all();
+        $owners=Owner::all();
+        return view('backend.manage_image',compact(['images','owners']));
     }
 
     /**
@@ -23,9 +26,9 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function backendcreate()
     {
-        //
+        return view('backend.manage_image');
     }
 
     /**
@@ -34,9 +37,25 @@ class ImageController extends Controller
      * @param  \App\Http\Requests\StoreImageRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreImageRequest $request)
+    public function backendstore(StoreImageRequest $request)
     {
-        //
+        $this->validate($request,[
+
+            'image'=>'required|mimes:jpeg,png,gif,jpg',
+            'image_alt'=>'required|max:250',
+          ]);
+          if($request->hasFile('image')){
+              $file=$request->image;
+              $new_file=time().$file->getClientOriginalName();
+              $file->move('storage/images_image/',$new_file);
+          }
+         Image::create([
+              "image_alt"=>$request->image_alt,
+              "owner_id"=>$request->owner,
+              "image"=>'storage/images_image/'.$new_file
+
+         ]);
+         return redirect()->back();
     }
 
     /**
@@ -45,7 +64,7 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function show(Image $image)
+    public function backendshow(Image $image)
     {
         //
     }
@@ -56,9 +75,12 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function edit(Image $image)
+    public function backendedit($id)
     {
-        //
+        $image=Image::find($id);
+        $owners=Owner::all();
+        return view('backend.updates.image_update',compact(['image','owners']));
+    
     }
 
     /**
@@ -68,9 +90,23 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateImageRequest $request, Image $image)
+    public function backendupdate(UpdateImageRequest $request,$id)
     {
-        //
+        $image=Image::find($id);
+        if($request->hasFile('image')){
+            $file=$request->image;
+            $new_file=time().$file->getClientOriginalName();
+            $file->move('storage/images_image/',$new_file);
+            $image->image='storage/images_image/'.$new_file;
+
+        }
+        
+        $image->image_alt=$request->image_alt;
+        $image->owner_id=$request->owner;
+        
+
+        $image->update();
+        return redirect()->route('image.index');
     }
 
     /**
@@ -79,8 +115,11 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Image $image)
+    public function backenddestroy($request)
     {
-        //
-    }
+        $image=Image::find($request);
+        $image->delete(); 
+        
+        
+        return redirect()->route('image.index');    }
 }

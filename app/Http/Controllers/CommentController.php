@@ -13,7 +13,7 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function backendindex()
     {
         //
     }
@@ -23,7 +23,7 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function backendcreate()
     {
         //
     }
@@ -34,7 +34,7 @@ class CommentController extends Controller
      * @param  \App\Http\Requests\StoreCommentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCommentRequest $request)
+    public function backendstore(StoreCommentRequest $request)
     {
         //
     }
@@ -45,7 +45,7 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function backendshow(Comment $comment)
     {
         //
     }
@@ -56,7 +56,7 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Comment $comment)
+    public function backendedit(Comment $comment)
     {
         //
     }
@@ -68,7 +68,7 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCommentRequest $request, Comment $comment)
+    public function backendupdate(UpdateCommentRequest $request, Comment $comment)
     {
         //
     }
@@ -79,7 +79,7 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function backenddestroy(Comment $comment)
     {
         //
     }

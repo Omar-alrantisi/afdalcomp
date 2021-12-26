@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use phpDocumentor\Reflection\Types\Resource_;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -13,9 +15,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function backendindex()
     {
-        //
+        $categories=Category::all();
+        return view('backend.manage_category',compact('categories'));
     }
 
     /**
@@ -23,9 +26,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function backendcreate()
     {
-        //
+        return view('backend.manage_category');
     }
 
     /**
@@ -34,9 +37,24 @@ class CategoryController extends Controller
      * @param  \App\Http\Requests\StoreCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategoryRequest $request)
+    public function backendstore(StoreCategoryRequest $request)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required|max:250',
+        
+            'image'=>'required|mimes:jpeg,png,gif,jpg',
+          ]);
+          if($request->hasFile('image')){
+              $file=$request->image;
+              $new_file=time().$file->getClientOriginalName();
+              $file->move('storage/category_images/',$new_file);
+          }
+          Category::create([
+              "name"=>$request->name,
+              "image"=>'storage/category_images/'.$new_file
+
+         ]);
+         return redirect()->back();
     }
 
     /**
@@ -45,7 +63,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function backendshow(Category $category)
     {
         //
     }
@@ -56,9 +74,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function backendedit($id)
     {
-        //
+        $category=Category::find($id);
+        return view('backend.updates.category_update',compact('category'));
     }
 
     /**
@@ -68,9 +87,20 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function backendupdate(UpdateCategoryRequest $request,  $id)
     {
-        //
+        $category=Category::find($id);
+        if($request->hasFile('image')){
+            $file=$request->image;
+            $new_file=time().$file->getClientOriginalName();
+            $file->move('storage/category_images/',$new_file);
+            $category->image='storage/category_images/'.$new_file;
+        }
+        $category->name=$request->name;
+        
+
+        $category->update();
+        return redirect()->route('category.index');
     }
 
     /**
@@ -79,8 +109,14 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function backenddestroy( $request)
     {
-        //
+        $category=Category::find($request);
+        $category->delete(); 
+        
+        
+        return redirect()->route('category.index');
     }
+
+    
 }

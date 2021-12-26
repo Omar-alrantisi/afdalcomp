@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Owner;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 
@@ -13,9 +14,11 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function backendindex()
     {
-        //
+        $services=Service::all();
+        $owners=Owner::all();
+        return view('backend.manage_services',compact(['services','owners']));
     }
 
     /**
@@ -23,9 +26,9 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function backendcreate()
     {
-        //
+        return view('backend.manage_services');
     }
 
     /**
@@ -34,9 +37,26 @@ class ServiceController extends Controller
      * @param  \App\Http\Requests\StoreServiceRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreServiceRequest $request)
+    public function backendstore(StoreServiceRequest $request)
     {
-        //
+        $this->validate($request,[
+            'title'=>'required|max:250',
+            'desc'=>'required|max:250',
+            'service_image'=>'required|mimes:jpeg,png,gif,jpg',
+          ]);
+          if($request->hasFile('service_image')){
+              $file=$request->service_image;
+              $new_file=time().$file->getClientOriginalName();
+              $file->move('storage/service_image/',$new_file);
+          }
+         Service::create([
+              "title"=>$request->title,
+              "desc"=>$request->desc,
+              "owner_id"=>$request->owner,
+              "service_image"=>'storage/service_image/'.$new_file
+
+         ]);
+         return redirect()->back();
     }
 
     /**
@@ -45,9 +65,9 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function show(Service $service)
+    public function backendshow(Service $service)
     {
-        //
+        
     }
 
     /**
@@ -56,9 +76,11 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function edit(Service $service)
+    public function backendedit($id)
     {
-        //
+        $service=Service::find($id);
+        $owners=Owner::all();
+        return view('backend.updates.service_update',compact(['service','owners']));
     }
 
     /**
@@ -68,9 +90,23 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateServiceRequest $request, Service $service)
+    public function backendupdate(UpdateServiceRequest $request, $id)
     {
-        //
+        $service=Service::find($id);
+        if($request->hasFile('service_image')){
+            $file=$request->service_image;
+            $new_file=time().$file->getClientOriginalName();
+            $file->move('storage/service_image/',$new_file);
+            $service->service_image='storage/service_image/'.$new_file;
+
+        }
+        $service->title=$request->title;
+        $service->desc=$request->desc;
+        $service->owner_id=$request->owner;
+        
+
+        $service->update();
+        return redirect()->route('service.index');
     }
 
     /**
@@ -79,8 +115,12 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Service $service)
+    public function backenddestroy( $request)
     {
-        //
+        $service=Service::find($request);
+        $service->delete(); 
+        
+        
+        return redirect()->route('service.index');
     }
 }

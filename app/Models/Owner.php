@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Owner extends Model
 {
+    protected $fillable = [
+        'owner_name',
+        'company_name',
+        'owner_email',
+        'company_email',
+        'password',
+        'logo',
+        'address',
+        'desc',
+        'num_of_employees',
+         'category_id',
+    ];
     public function category(){
         return $this->belongsTo(Category::class);
     }

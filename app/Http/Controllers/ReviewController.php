@@ -13,7 +13,7 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function backendindex()
     {
         //
     }
@@ -23,7 +23,7 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function backendcreate()
     {
         //
     }
@@ -34,7 +34,7 @@ class ReviewController extends Controller
      * @param  \App\Http\Requests\StoreReviewRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreReviewRequest $request)
+    public function backendstore(StoreReviewRequest $request)
     {
         //
     }
@@ -45,7 +45,7 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function show(Review $review)
+    public function backendshow(Review $review)
     {
         //
     }
@@ -56,7 +56,7 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function edit(Review $review)
+    public function backendedit(Review $review)
     {
         //
     }
@@ -68,7 +68,7 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateReviewRequest $request, Review $review)
+    public function backendupdate(UpdateReviewRequest $request, Review $review)
     {
         //
     }
@@ -79,7 +79,7 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function backenddestroy(Review $review)
     {
         //
     }

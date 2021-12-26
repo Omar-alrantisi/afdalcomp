@@ -13,9 +13,10 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function backendindex()
     {
-        //
+        $admins=Admin::all();
+        return view('backend.manage_admin',compact('admins'));
     }
 
     /**
@@ -23,9 +24,9 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function backendcreate()
     {
-        //
+        return view('backend.manage_admin');
     }
 
     /**
@@ -34,9 +35,24 @@ class AdminController extends Controller
      * @param  \App\Http\Requests\StoreAdminRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAdminRequest $request)
+    public function backendstore(StoreAdminRequest $request)
     {
-        //
+        
+        $this->validate($request,[
+            'name'=>'required|max:250',
+            'email'=>'required|max:250',
+            'password'=>'required|max:250',
+           
+          ]);
+          
+          Admin::create([
+              "name"=>$request->name,
+              "email"=>$request->email,
+              "password"=>$request->password,
+              
+
+         ]);
+         return redirect()->back();
     }
 
     /**
@@ -45,7 +61,7 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(Admin $admin)
+    public function backendshow(Admin $admin)
     {
         //
     }
@@ -56,9 +72,10 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(Admin $admin)
+    public function backendedit($id)
     {
-        //
+        $admin=Admin::find($id);
+        return view('backend.updates.admin_update',compact('admin'));
     }
 
     /**
@@ -68,9 +85,16 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAdminRequest $request, Admin $admin)
+    public function backendupdate(UpdateAdminRequest $request, $id)
     {
-        //
+        $admin=Admin::find($id);
+       
+        $admin->name=$request->name;
+        $admin->email=$request->email;
+        $admin->password=$request->password;
+
+        $admin->update();
+        return redirect()->route('admin.index');
     }
 
     /**
@@ -79,8 +103,11 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Admin $admin)
+    public function backenddestroy($id)
     {
-        //
+        $admin=Admin::find($id);
+        $admin->destroy($id);
+
+        return redirect()->route('admin.index');
     }
 }
